@@ -24,5 +24,7 @@ admin.site.index_title = "Welcome to DevOps Researcher Portal"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user_info.urls')),
+    path('', include('crud_func_view.urls')),
+
 
 ]

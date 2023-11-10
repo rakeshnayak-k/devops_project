@@ -5,5 +5,6 @@ from .models import UserInfo
 @admin.register(UserInfo)
 class UserInfoadmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'email', 'phone','created_at']
+    ordering = ['id']
 
 

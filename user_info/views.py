@@ -23,6 +23,7 @@ def user_info_form(request):
 
     return HttpResponse(json_data, content_type='application/json')
 
+
 # @api_view(['POST'])
 @csrf_exempt
 def user_create(request):
