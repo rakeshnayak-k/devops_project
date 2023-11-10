@@ -1,36 +1,20 @@
 from django.shortcuts import render, HttpResponse
-from .forms import UserInfoForm
-
+from .models import UserInfo
+from .serializers import UserInfoSerializer
+from rest_framework.renderers import JSONRenderer
 
 # Create your views here.
 
-# def user_info_form(request):
-#     if request.method == 'POST':
-#         form = UserInfoForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('success')
-#     else:
-#         form = UserInfoForm()
-#     return  render(request, 'user_info/user_info_form.html', {'form': form})
+def user_info_form(request):
+    obj = UserInfo.objects.all()
 
-# def success(request):
-#     return render(request, 'user_info/success.html')
+    serializer = UserInfoSerializer(obj,many=True)
 
-def home(request):
-    context = {
-        'variable1': 'Hello World learn Django',
-        'variable2': 'Hello World learn Devops'
+    json_data = JSONRenderer().render(serializer.data)
 
-    }
-    return render(request,'index.html',context)
-    # return HttpResponse('This is Home page')
+    return HttpResponse(json_data, content_type='application/json')
+    
 
-def about(request):
-    return HttpResponse('This is about page')
 
-def services(request):
-    return HttpResponse('This is services page')
 
-def contact(request):
-    return HttpResponse('This is contact page')
+
