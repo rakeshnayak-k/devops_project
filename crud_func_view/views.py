@@ -74,6 +74,20 @@ def student_api(request):
             res = {'error msg': str(e)}
             res_json = JSONRenderer().render(res)
             return HttpResponse(res_json, content_type='application/json')
+        
+    if request.method == 'DELETE':
+        try:
+            python_data = json.loads(request.body.decode('utf-8')) # loads() json data(request.body) to python data
+            stu = Student.objects.get(roll=python_data.get("roll"))
+            stu.delete()
+            res = {'msg': 'Student deleted Successfully'}
+            res_del = JSONRenderer().render(res)
+            return HttpResponse(res_del, content_type='application/json')
+        except Exception as e:
+            res = {'error msg': str(e)}
+            res_json = JSONRenderer().render(res)
+            return HttpResponse(res_json, content_type='application/json')
+
 
 
 
