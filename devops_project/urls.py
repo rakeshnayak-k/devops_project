@@ -25,6 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user_info.urls')),
     path('', include('crud_func_view.urls')),
+    path('', include('crud_class_view.urls')),
+
 
 
 ]

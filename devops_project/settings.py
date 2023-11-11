@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'user_info',
     'crud_func_view',
+    'crud_class_view',
+
 ]
 
 MIDDLEWARE = [
