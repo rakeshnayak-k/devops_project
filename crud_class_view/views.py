@@ -71,6 +71,7 @@ class StudentAPIView(View):
         try:
             python_data = json.loads(request.body.decode('utf-8')) # loads() json data(request.body) to python data
             stu = Student.objects.get(roll=python_data.get("roll"))
+            # we don't have to do validations for deleting a model object we ca delete it directly using delete() method
             stu.delete()
             res = {'msg': 'Student deleted Successfully'}
             res_del = JSONRenderer().render(res)
