@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserInfo
+from .models import UserInfo, UserAddress
 
 
 class UserInfoSerializer(serializers.Serializer):
@@ -10,3 +10,9 @@ class UserInfoSerializer(serializers.Serializer):
     def create(self,validate_data):
         return UserInfo.objects.create(**validate_data)
 
+class UserAddressSerializer(serializers.ModelSerializer):
+    # phone = UserInfoSerializer()
+    class Meta:
+        model = UserAddress
+        fields = '__all__'
+        # fields = ['phone','pin_code','State','district']     

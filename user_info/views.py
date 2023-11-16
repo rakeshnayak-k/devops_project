@@ -1,13 +1,18 @@
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from .models import UserInfo
-from .serializers import UserInfoSerializer
+from .serializers import UserInfoSerializer, UserAddressSerializer
 from rest_framework.renderers import JSONRenderer
 import io
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 import json
+from django.views import View
+from rest_framework.renderers import JSONRenderer
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
 
 
 # Create your views here.
@@ -52,6 +57,41 @@ def user_create(request):
             res = {'error msg': str(e)}
             res_json = JSONRenderer().render(res)
             return HttpResponse(res_json, content_type='application/json')
+    
+    if request.method == 'DELETE':
+        try:
+            python_data = json.loads(request.body.decode('utf-8')) # loads() json data(request.body) to python data
+            user = UserInfo.objects.get(phone=python_data.get("phone"))
+            user.delete()
+            res = {'msg': 'user deleted Successfully'}
+            res_del = JSONRenderer().render(res)
+            return HttpResponse(res_del, content_type='application/json')
+        except Exception as e:
+            res = {'error msg': str(e)}
+            res_json = JSONRenderer().render(res)
+            return HttpResponse(res_json, content_type='application/json')
+
+
+@method_decorator(csrf_exempt,name='dispatch')
+class UserAddressAPIView(View):
+    def post(self, request, *args, **kwargs):
+        try:
+            python_data = json.loads(request.body.decode('utf-8'))
+            serializer = UserAddressSerializer(data=python_data)
+            if serializer.is_valid():
+                serializer.save()
+                res = {'msg': 'Student Created'}
+                json_data1 = JSONRenderer().render(res)
+                return HttpResponse(json_data1, content_type='application/json')
+            error_data = JSONRenderer().render(serializer.errors)
+            return HttpResponse(error_data, content_type='application/json')
+
+        except Exception as e:
+            res = {'error msg':str(e)}
+            res_json = JSONRenderer().render(res)
+            return HttpResponse(res_json, content_type='application/json')
+
+
 
 
 

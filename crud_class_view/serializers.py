@@ -8,7 +8,7 @@ def starts_with_k(value):
     
 
 class StudentSerializer(serializers.Serializer):
-    name=serializers.CharField(max_length=100, validators=[starts_with_k()])
+    name=serializers.CharField(max_length=100, validators=[starts_with_k])
     roll=serializers.IntegerField()
     city=serializers.CharField(max_length=100)
     
